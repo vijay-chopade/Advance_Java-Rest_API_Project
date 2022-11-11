@@ -5,8 +5,9 @@ public class Student {
 	private int sid;
 	private String sname;
 	private double smarks;
-	
-	public Student() {}
+
+	public Student() {
+	}
 
 	public Student(int sid, String sname, double smarks) {
 		super();
@@ -43,5 +44,5 @@ public class Student {
 	public String toString() {
 		return "Student [sid=" + sid + ", sname=" + sname + ", smarks=" + smarks + "]";
 	}
-	
+
 }

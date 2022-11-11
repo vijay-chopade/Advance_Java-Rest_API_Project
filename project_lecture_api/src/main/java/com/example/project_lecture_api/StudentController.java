@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @CrossOrigin("http://localhost:8787")
 public class StudentController {
@@ -55,27 +54,27 @@ public class StudentController {
 
 	@PostMapping("student")
 	public String addStudent(@RequestBody Student student) {
-		int []ids = new int[arrayList.size()];
-		int j =0;
+		int[] ids = new int[arrayList.size()];
+		int j = 0;
 		for (Student oldstudent : arrayList) {
 			ids[j] = oldstudent.getSid();
 //			System.err.println("User ID: "+oldstudent.getSid());
 			j++;
 		}
-			for (int i=0;i<ids.length;i++) {
-				if (ids[i] == student.getSid()) {
-					return "Student already prasent...!";
-				}
+		for (int i = 0; i < ids.length; i++) {
+			if (ids[i] == student.getSid()) {
+				return "Student already prasent...!";
 			}
-			arrayList.add(student);
-			return student.getSid()+" add successfully!";
+		}
+		arrayList.add(student);
+		return student.getSid() + " add successfully!";
 	}
-	
+
 	@DeleteMapping("student/{rno}")
 	public String deleteStudent(@PathVariable int rno) {
 		Student deleteStudent = null;
-		for(Student student:arrayList) {
-			if(student.getSid() == rno){
+		for (Student student : arrayList) {
+			if (student.getSid() == rno) {
 				deleteStudent = student;
 				break;
 			}
@@ -83,12 +82,12 @@ public class StudentController {
 		arrayList.remove(deleteStudent);
 		return "Student Delete Successfully.";
 	}
-	
+
 	@PutMapping("student")
 	public ArrayList updateStudent(@RequestBody Student clientStudent) {
 		Student updateStudent = null;
 		for (Student student : arrayList) {
-			if(student.getSid() == clientStudent.getSid()) {
+			if (student.getSid() == clientStudent.getSid()) {
 				updateStudent = student;
 			}
 		}

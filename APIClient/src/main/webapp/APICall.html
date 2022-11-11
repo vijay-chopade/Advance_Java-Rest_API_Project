@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lecture4</title>
+<script type="text/javascript">
+	var xmlhttp;
+	//-----------------------------------------xxxxxxxxxxxxxxxxxxxxxxx
+	function getData() {
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onload = show;
+		var rno = document.form1.rno.value;
+		xmlhttp.open("get", "http://localhost:8081/student/" + rno);
+		xmlhttp.send();
+	}
+	function show() {
+		alert(xmlhttp.responseText);
+		var obj = JSON.parse(xmlhttp.responseText);
+		//document.form1.name.value = xmlhtml.responseText;
+		document.form1.rno.value = obj.sid;
+		document.form1.name.value = obj.sname;
+		document.form1.marks.value = obj.smarks;
+	}
+	//-----------------------------------------xxxxxxxxxxxxxxxxxxxxxxx
+
+	function deleteData() {
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onload = show2;
+		var rno = document.form1.rno.value;
+		xmlhttp.open("delete", "http://localhost:8081/student/" + rno);
+		xmlhttp.send();
+	}
+	function show2() {
+		alert(xmlhttp.responseText);
+	}
+	//-----------------------------------------xxxxxxxxxxxxxxxxxxxxxxx
+
+	function postData() {
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onload = show3;
+		var rno = document.form1.rno.value;
+		var name = document.form1.name.value;
+		var marks = document.form1.marks.value;
+		var obj = {
+			"sid" : rno,
+			"sname" : name,
+			"smarks" : marks
+		};
+		xmlhttp.open("post", "http://localhost:8081/student");
+		xmlhttp.setRequestHeader("Content-type", "application/json");
+		xmlhttp.send(JSON.stringify(obj));
+	}
+	function show3() {
+		alert(xmlhttp.responseText);
+	}
+	//-----------------------------------------xxxxxxxxxxxxxxxxxxxxxxx
+	function putData() {
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onload = show4;
+		var rno = document.form1.rno.value;
+		var name = document.form1.name.value;
+		var marks = document.form1.marks.value;
+		var obj = {
+			"sid" : rno,
+			"sname" : name,
+			"smarks" : marks
+		};
+		xmlhttp.open("put", "http://localhost:8081/student");
+		xmlhttp.setRequestHeader("Content-type", "application/json");
+		xmlhttp.send(JSON.stringify(obj));
+	}
+	function show4() {
+		alert(xmlhttp.responseText);
+	}
+	//-----------------------------------------xxxxxxxxxxxxxxxxxxxxxxx
+</script>
+
+</head>
+<body>
+	<form name="form1">
+
+		<input type="text" name="rno"><br> <br> <input
+			type="text" name="name"><br> <br> <input
+			type="text" name="marks"><br> <br> <input
+			type="button" onclick="postData()" value="Post"> <input
+			type="button" onclick="getData()" value="Get"> <input
+			type="button" onclick="putData()" value="Put"> <input
+			type="button" onclick="deleteData()" value="Delete"><br>
+		<br>
+
+	</form>
+</body>
+</html>

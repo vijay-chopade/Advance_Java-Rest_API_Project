@@ -2,26 +2,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Lecture2</title>
 <script type="text/javascript">
 
-	var xmlhttp;
 
 	function change(){
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.onload=show;
-		xmlhttp.open("get","http://localhost:8081/students");
-		xmlhttp.send();
-	}
-	function show(){
-		alert(xmlhttp.responseText);
-		document.getElementById("g1").innerHTML = xmlhttp.responseText;
+		document.getElementById("g1").innerHTML = "Welcome to the JavaScript";
 	}
 </script>
 </head>
 <body>
 
-	<input type="text" name="rno" id="rno" placeholder="Enter rno">
 	<p id = "g1">Welcome to HTML</p>
 	<input type="button" onclick="change()" value="click me">
 
