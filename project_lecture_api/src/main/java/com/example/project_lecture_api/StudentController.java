@@ -2,6 +2,7 @@ package com.example.project_lecture_api;
 
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
+@CrossOrigin("http://localhost:8787")
 public class StudentController {
 
 //	http://localhost:8081/
@@ -70,24 +73,27 @@ public class StudentController {
 	
 	@DeleteMapping("student/{rno}")
 	public String deleteStudent(@PathVariable int rno) {
+		Student deleteStudent = null;
 		for(Student student:arrayList) {
 			if(student.getSid() == rno){
-				arrayList.remove(student);
+				deleteStudent = student;
 				break;
 			}
 		}
+		arrayList.remove(deleteStudent);
 		return "Student Delete Successfully.";
 	}
 	
 	@PutMapping("student")
 	public ArrayList updateStudent(@RequestBody Student clientStudent) {
+		Student updateStudent = null;
 		for (Student student : arrayList) {
 			if(student.getSid() == clientStudent.getSid()) {
-				student.setSname(clientStudent.getSname());
-				student.setSmarks(clientStudent.getSmarks());
+				updateStudent = student;
 			}
 		}
-		
+		updateStudent.setSname(clientStudent.getSname());
+		updateStudent.setSmarks(clientStudent.getSmarks());
 		return arrayList;
 	}
 
