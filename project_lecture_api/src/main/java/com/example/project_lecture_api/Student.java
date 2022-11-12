@@ -1,15 +1,20 @@
 package com.example.project_lecture_api;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Student {
 
+	@Id
 	private int sid;
 	private String sname;
-	private double smarks;
+	private int smarks;
 
 	public Student() {
 	}
 
-	public Student(int sid, String sname, double smarks) {
+	public Student(int sid, String sname, int smarks) {
 		super();
 		this.sid = sid;
 		this.sname = sname;
@@ -32,11 +37,11 @@ public class Student {
 		this.sname = sname;
 	}
 
-	public double getSmarks() {
+	public int getSmarks() {
 		return smarks;
 	}
 
-	public void setSmarks(double smarks) {
+	public void setSmarks(int smarks) {
 		this.smarks = smarks;
 	}
 
