@@ -12,7 +12,7 @@ public class MyController {
 	@RequestMapping("apicall")
 	public String apicall() {
 
-		return "apicall";
+		return "APICall";
 	}
 //	modelAndView : if i want to show/send my java api data on jsp then i use modelandview;
 //	if i want to show my data on client site inadvance then i simply call my jsp page

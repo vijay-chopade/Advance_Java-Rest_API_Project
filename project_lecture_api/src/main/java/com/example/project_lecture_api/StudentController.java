@@ -1,7 +1,9 @@
 package com.example.project_lecture_api;
 
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:8787")
@@ -26,6 +26,7 @@ public class StudentController {
 	List<Student> arraylist = null;
 
 	public StudentController() {
+//		System.err.println("Student Bean was diste....StudentController(){}");
 	}
 
 	@GetMapping("students")
@@ -35,62 +36,45 @@ public class StudentController {
 
 		Session session = factory.openSession();
 		arraylist = session.createCriteria(Student.class).list();
-		System.err.println(arraylist);
 		return arraylist;
 	}
 
 	@GetMapping("student/{rno}")
 	public Student getStudent(@PathVariable int rno) {
-		for (Student student : arraylist) {
-			if (student.getSid() == rno) {
-				return student;
-			}
-		}
-		return null;
+		Session session = factory.openSession();
+		Student student = session.load(Student.class, rno);
+		return student;
 	}
 
 	@PostMapping("student")
 	public String addStudent(@RequestBody Student student) {
-		int[] ids = new int[arraylist.size()];
-		int j = 0;
-		for (Student oldstudent : arraylist) {
-			ids[j] = oldstudent.getSid();
-//			System.err.println("User ID: "+oldstudent.getSid());
-			j++;
-		}
-		for (int i = 0; i < ids.length; i++) {
-			if (ids[i] == student.getSid()) {
-				return "Student already prasent...!";
-			}
-		}
-		arraylist.add(student);
+		Session session = factory.openSession();
+		Transaction tr = session.beginTransaction();
+		session.save(student);
+
+		tr.commit();
+		List<Student> list = allStudents();
 		return student.getSid() + " add successfully!";
 	}
 
 	@DeleteMapping("student/{rno}")
 	public String deleteStudent(@PathVariable int rno) {
-		Student deleteStudent = null;
-		for (Student student : arraylist) {
-			if (student.getSid() == rno) {
-				deleteStudent = student;
-				break;
-			}
-		}
-		arraylist.remove(deleteStudent);
-		return "Student Delete Successfully.";
+		Session session = factory.openSession();
+		Student student = session.load(Student.class, rno);
+		Transaction tr = session.beginTransaction();
+		session.delete(student);
+		tr.commit();
+		return "Student deleted.";
 	}
 
 	@PutMapping("student")
-	public List<Student> updateStudent(@RequestBody Student clientStudent) {
-		Student updateStudent = null;
-		for (Student student : arraylist) {
-			if (student.getSid() == clientStudent.getSid()) {
-				updateStudent = student;
-			}
-		}
-		updateStudent.setSname(clientStudent.getSname());
-		updateStudent.setSmarks(clientStudent.getSmarks());
-		return arraylist;
+	public List<Student> updateStudent(@RequestBody Student Student) {
+		Session session = factory.openSession();
+		Transaction tr = session.beginTransaction();
+		session.saveOrUpdate(Student);
+		tr.commit();
+		List<Student> list = allStudents();
+		return list;
 	}
 
 }

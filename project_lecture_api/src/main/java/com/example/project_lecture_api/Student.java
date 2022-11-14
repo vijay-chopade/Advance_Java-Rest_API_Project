@@ -11,7 +11,11 @@ public class Student {
 	private String sname;
 	private int smarks;
 
+	
+
 	public Student() {
+		super();
+//		System.err.println("Student Bean was diste....Student(){}");
 	}
 
 	public Student(int sid, String sname, int smarks) {
